@@ -1,0 +1,58 @@
+#! /bin/sh
+
+##########################################################################
+#
+# TJH ARD Login for OSX versions 10.5 - 10.9
+# Thomas Holbrook - tom@tomholbrook.co.uk
+#
+##########################################################################
+
+#Some Info
+
+username=Jigsaw24
+password=password
+
+#Remove the pesky bluetooth window.
+
+TJHRemoveBT()
+{
+printf " Removeing BT Window "
+osascript <<EOT
+tell application "System Events"
+        keystroke "w" using {command down}
+end tell
+EOT
+}
+
+#Wait time, adjust for slower clients.
+
+TJHWait()
+{
+printf " Waiting patiently "
+sleep 5
+}
+
+#Actually login, ensuring that the cursor is in the right box!
+
+TJHLogin()
+{
+printf " Logging in $username "
+osascript <<EOT
+tell application "SecurityAgent" to activate
+tell application "System Events" to keystroke "$username"
+tell application "System Events" to delay 2
+tell application "System Events" to keystroke tab
+tell application "System Events" to delay 2
+tell application "System Events" to keystroke "$password"
+tell application "System Events" to delay 2
+tell application "System Events" to keystroke return
+EOT
+}
+
+####
+#Runtime
+####
+
+TJHRemoveBT
+TJHWait
+TJHLogin
