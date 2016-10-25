@@ -28,7 +28,6 @@ function downloadFile
 function buildProduct
 {
 	
-	ln -s $localDir/macOSUpd10.12.1.pkg $localDir/macOSUpd10.12.1Patch.pkg 
 	distXML="$(find $localDir -name '*.dist')"
 	productbuild --distribution $distXML --package-path $localDir /tmp/$pkgName
 	echo "Package avaliable at /tmp/$pkgName"
@@ -37,6 +36,8 @@ function buildProduct
 }
 
 downloadFile http://swcdn.apple.com/content/downloads/00/27/031-86699/volvzezccz6wt97sc8zi3z55d7cinlnte3/macOSUpd10.12.1.pkg 
+
+downloadFile http://swcdn.apple.com/content/downloads/00/27/031-86699/volvzezccz6wt97sc8zi3z55d7cinlnte3/macOSUpd10.12.1Patch.pkg
 
 downloadFile http://swcdn.apple.com/content/downloads/00/27/031-86699/volvzezccz6wt97sc8zi3z55d7cinlnte3/macOSUpd10.12.1.smd
 
