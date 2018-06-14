@@ -1,0 +1,78 @@
+#!/bin/bash
+
+#Thomas Holbrook 
+#PoC Function to report macOS version
+
+getOSVersion() (
+
+  osVer=$(sw_vers -productVersion)
+
+  getOSVersionminor() {
+    echo "${1}" | cut -f3 -d\.
+  }
+
+  getOSVersionmajor() {
+    echo "${1}" | cut -f2 -d\.
+  }
+
+  case ${1} in
+
+    major)
+      macOSversion=$(getOSVersionmajor $osVer)
+      ;;
+    minor)
+      macOSversion=$(getOSVersionminor $osVer)
+
+      if [[ $macOSversion = "" ]];
+        then
+          macOSversion="0"
+      fi
+      ;;
+    name)
+      case $(getOSVersionmajor $osVer) in
+        14)
+          macOSversion="Mojave"
+          ;;
+        13)
+          macOSversion="High Sierra"
+          ;;
+        12)
+          macOSversion="Sierra"
+          ;;
+        11)
+          macOSversion="El Capitan"
+          ;;
+        10)
+          macOSversion="Yosemite"
+          ;;
+        *)
+          macOSversion="Old!!"
+          ;;
+        esac
+      ;;
+    *)
+      macOSversion=$osVer
+      ;;
+    esac
+
+echo $macOSversion
+
+)
+
+
+#Example Use
+
+echo "The os version is $(getOSVersion)"
+
+echo "The os major version is $(getOSVersion major)"
+
+echo "The os minor version is $(getOSVersion minor)"
+
+echo "The os is $(getOSVersion name)"
+
+if [[ $(getOSVersion major) < 14 ]];
+  then
+    echo "Upgrade Time"
+  else
+    echo "Latest Major Release"
+fi
